@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { View, Text, StyleSheet, ScrollView, Image, Linking, TouchableOpacity, useWindowDimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, Linking, TouchableOpacity, useWindowDimensions, Modal, Pressable, Alert } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 // Paleta de Cores: Dark Theme com Roxo e Azul
@@ -18,6 +18,7 @@ const colors = {
 // ========== HOME / HERO ==========
 const Home = () => {
   const styles = useStyles();
+  const [selectedStat, setSelectedStat] = useState(null);
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
@@ -25,30 +26,32 @@ const Home = () => {
       <View style={styles.heroSection}>
         <View style={styles.heroGradient}>
           <View style={styles.heroContent}>
-            <Text style={styles.welcomeText}>👋 Bem-vindo!</Text>
+            
             <Text style={styles.nameText}>Thiago Henrique</Text>
             <Text style={styles.professionText}>Desenvolvedor de Software & SQL Specialist</Text>
             
             <View style={styles.profileContainer}>
-              <Image 
-                source={{ uri: 'https://github.com/thmn93.png' }} 
-                style={styles.heroImage} 
-              />
+              <Pressable onPress={() => Linking.openURL('https://github.com/thmn93')} accessibilityRole="link">
+                <Image 
+                  source={{ uri: 'https://github.com/thmn93.png' }} 
+                  style={styles.heroImage} 
+                />
+              </Pressable>
             </View>
 
             <View style={styles.statsContainer}>
-              <View style={styles.statBox}>
+              <Pressable style={styles.statBox} onPress={() => Alert.alert('Semestre', 'Atualmente no 5º semestre do curso DSM na FATEC.') }>
                 <Text style={styles.statNumber}>5º</Text>
                 <Text style={styles.statLabel}>Semestre DSM</Text>
-              </View>
-              <View style={styles.statBox}>
+              </Pressable>
+              <Pressable style={styles.statBox} onPress={() => Alert.alert('Experiência', 'Mais de 2 anos de experiência em suporte e desenvolvimento.') }>
                 <Text style={styles.statNumber}>+2</Text>
                 <Text style={styles.statLabel}>Anos Exp.</Text>
-              </View>
-              <View style={styles.statBox}>
+              </Pressable>
+              <Pressable style={styles.statBox} onPress={() => Alert.alert('Tecnologias', 'Principais: SQL Server, React, Node.js, Python, React Native.') }>
                 <Text style={styles.statNumber}>8</Text>
                 <Text style={styles.statLabel}>Tecnologias</Text>
-              </View>
+              </Pressable>
             </View>
           </View>
         </View>
@@ -74,6 +77,9 @@ const Home = () => {
       {/* Footer */}
       <View style={styles.footer}>
         <Text style={styles.footerText}>© 2026 Thiago Henrique</Text>
+        <TouchableOpacity style={styles.contactButton} onPress={() => Linking.openURL('mailto:thiago@example.com')}>
+          <Text style={styles.contactButtonText}>Contato</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -93,7 +99,8 @@ const About = () => {
       <View style={styles.aboutCard}>
         <Image 
           source={{ uri: 'https://github.com/thmn93.png' }} 
-          style={styles.aboutImage} 
+          style={styles.aboutImage}
+          resizeMode="cover"
         />
         
         <View style={styles.aboutContent}>
@@ -112,7 +119,7 @@ const About = () => {
           <View style={styles.infoCard}>
             <Ionicons name="briefcase" size={20} color={colors.primary} />
             <View style={styles.infoText}>
-              <Text style={styles.infoTitle}>Experiência</Text>
+              <Text style={styles.infoTitle}>Experiência na área</Text>
               <Text style={styles.infoSubtitle}>Faktory Sistemas - Especialista em SQL</Text>
             </View>
           </View>
@@ -129,6 +136,9 @@ const About = () => {
 
       <View style={styles.footer}>
         <Text style={styles.footerText}>© 2026 Thiago Henrique</Text>
+        <TouchableOpacity style={styles.contactButton} onPress={() => Linking.openURL('mailto:thiago@example.com')}>
+          <Text style={styles.contactButtonText}>Contato</Text>
+        </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -172,19 +182,43 @@ const Experience = () => {
         <View style={styles.cardContent}>
           <Text style={styles.cardTitle}>Grand Hotel Royal</Text>
           <Text style={styles.cardRole}>Analista Financeiro</Text>
-          <Text style={styles.periodText}>2023 — 2024</Text>
+          <Text style={styles.periodText}>Mudança de unidade dentro da franquia2023 — 2024</Text>
           <View style={styles.divider}></View>
           
           <View style={styles.bulletContainer}>
             <Text style={styles.bulletPoint}>✓ Gestão de caixa</Text>
             <Text style={styles.bulletPoint}>✓ Análise financeira</Text>
             <Text style={styles.bulletPoint}>✓ Controladoria</Text>
+            <Text style={styles.bulletPoint}>✓ Responsável por processos de auditoria</Text>
+            <Text style={styles.bulletPoint}>✓ Gerenciamento e gestão do financeiro em geral</Text>
+          </View>
+        </View>
+      </View>
+
+      {/* Previous Job */}
+      <View style={styles.experienceCard}>
+        <View style={styles.cardContent}>
+          <Text style={styles.cardTitle}>Sorocaba Park Hotel</Text>
+          <Text style={styles.cardRole}>Analista Financeiro</Text>
+          <Text style={styles.periodText}>2015 — 2022</Text>
+          <View style={styles.divider}></View>
+          
+          <View style={styles.bulletContainer}>
+            <Text style={styles.bulletPoint}>✓ Gestão de caixa</Text>
+            <Text style={styles.bulletPoint}>✓ Análise financeira</Text>
+            <Text style={styles.bulletPoint}>✓ Controladoria</Text>
+            <Text style={styles.bulletPoint}>✓ Responsável por processos de auditoria</Text>
+            <Text style={styles.bulletPoint}>✓ Gerenciamento e gestão do financeiro em geral</Text>
+
           </View>
         </View>
       </View>
 
       <View style={styles.footer}>
-        <Text style={styles.footerText}>© 2026 Thiago Henrique</Text>
+          <Text style={styles.footerText}>© 2026 Thiago Henrique</Text>
+          <TouchableOpacity style={styles.contactButton} onPress={() => Linking.openURL('mailto:thiago@example.com')}>
+            <Text style={styles.contactButtonText}>Contato</Text>
+          </TouchableOpacity>
       </View>
     </ScrollView>
   );
@@ -193,6 +227,43 @@ const Experience = () => {
 // ========== SKILLS ==========
 const Skills = () => {
   const styles = useStyles();
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedSkill, setSelectedSkill] = useState(null);
+
+  const techSkills = [
+    { name: 'SQL Server', desc: 'Banco de dados relacional utilizado para armazenar e consultar dados usando T-SQL.' },
+    { name: 'T-SQL', desc: 'Linguagem de consulta e programação para SQL Server: stored procedures, views e otimização.' },
+    { name: 'React', desc: 'Biblioteca para construir interfaces web reativas e componentes reutilizáveis.' },
+    { name: 'Node.js', desc: 'Runtime para executar JavaScript no servidor e criar APIs.' },
+    { name: 'Next.js', desc: 'Framework React para SSR e rotas simplificadas.' },
+    { name: 'JavaScript', desc: 'Linguagem principal para desenvolvimento web front-end e back-end.' },
+    { name: 'Python', desc: 'Linguagem versátil para automação, scripts e análise de dados.' },
+    { name: 'React Native', desc: 'Framework para construir apps móveis nativos com React.' },
+  ];
+
+  const softSkills = [
+    { name: 'Resolução de Problemas', desc: 'Abordagem analítica para identificar e corrigir gargalos.' },
+    { name: 'Análise Crítica', desc: 'Avaliar soluções e escolher a mais eficiente e segura.' },
+    { name: 'Comunicação', desc: 'Clareza ao documentar e explicar decisões técnicas.' },
+    { name: 'Trabalho em Equipe', desc: 'Colaboração com times multidisciplinares.' },
+    { name: 'Adaptabilidade', desc: 'Aprender novas tecnologias conforme necessário.' },
+    { name: 'Atenção', desc: 'Detalhismo em queries e processos críticos.' },
+  ];
+
+  const businessSkills = [
+    { name: 'Fluxo de Caixa', desc: 'Conhecimento de entradas/saídas e projeções financeiras.' },
+    { name: 'Tributação NF-e', desc: 'Entendimento de regras fiscais e integração de notas fiscais eletrônicas.' },
+    { name: 'ERP', desc: 'Familiaridade com processos e módulos de ERP.' },
+    { name: 'Controladoria', desc: 'Análises para suporte à tomada de decisão financeira.' },
+    { name: 'SQL Avançado', desc: 'Tuning, índices, planos de execução e troubleshooting.' },
+  ];
+
+  const languages = [
+    { name: '🇧🇷 Português', desc: 'Nativo' },
+    { name: '🇬🇧 Inglês Avançado', desc: 'Leitura técnica e comunicação profissional.' },
+  ];
+
+  const openSkill = (skill) => { setSelectedSkill(skill); setModalVisible(true); };
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
@@ -208,10 +279,10 @@ const Skills = () => {
           <Text style={styles.skillCategoryTitle}>Tecnologias</Text>
         </View>
         <View style={styles.skillsGrid}>
-          {['SQL Server', 'T-SQL', 'React', 'Node.js', 'Next.js', 'JavaScript', 'Python', 'React Native'].map(skill => (
-            <View key={skill} style={[styles.skillTag, styles.techSkillTag]}>
-              <Text style={styles.skillTagText}>{skill}</Text>
-            </View>
+          {techSkills.map(skill => (
+            <Pressable key={skill.name} onPress={() => openSkill(skill)} style={({pressed})=>[styles.skillTag, styles.techSkillTag, pressed && styles.skillPressed]}>
+              <Text style={styles.skillTagText}>{skill.name}</Text>
+            </Pressable>
           ))}
         </View>
       </View>
@@ -223,10 +294,10 @@ const Skills = () => {
           <Text style={styles.skillCategoryTitle}>Competências</Text>
         </View>
         <View style={styles.skillsGrid}>
-          {['Resolução de Problemas', 'Análise Crítica', 'Comunicação', 'Trabalho em Equipe', 'Adaptabilidade', 'Atenção'].map(skill => (
-            <View key={skill} style={[styles.skillTag, styles.softSkillTag]}>
-              <Text style={[styles.skillTagText, { color: colors.accent }]}>{skill}</Text>
-            </View>
+          {softSkills.map(skill => (
+            <Pressable key={skill.name} onPress={() => openSkill(skill)} style={({pressed})=>[styles.skillTag, styles.softSkillTag, pressed && styles.skillPressed]}>
+              <Text style={[styles.skillTagText, { color: colors.accent }]}>{skill.name}</Text>
+            </Pressable>
           ))}
         </View>
       </View>
@@ -238,10 +309,10 @@ const Skills = () => {
           <Text style={styles.skillCategoryTitle}>Negócios</Text>
         </View>
         <View style={styles.skillsGrid}>
-          {['Fluxo de Caixa', 'Tributação NF-e', 'ERP', 'Controladoria', 'SQL Avançado'].map(skill => (
-            <View key={skill} style={[styles.skillTag, styles.businessSkillTag]}>
-              <Text style={[styles.skillTagText, { color: colors.primary }]}>{skill}</Text>
-            </View>
+          {businessSkills.map(skill => (
+            <Pressable key={skill.name} onPress={() => openSkill(skill)} style={({pressed})=>[styles.skillTag, styles.businessSkillTag, pressed && styles.skillPressed]}>
+              <Text style={[styles.skillTagText, { color: colors.primary }]}>{skill.name}</Text>
+            </Pressable>
           ))}
         </View>
       </View>
@@ -253,17 +324,32 @@ const Skills = () => {
           <Text style={styles.skillCategoryTitle}>Idiomas</Text>
         </View>
         <View style={styles.skillsGrid}>
-          {['🇧🇷 Português', '🇬🇧 Inglês Avançado'].map(lang => (
-            <View key={lang} style={[styles.skillTag, styles.langSkillTag]}>
-              <Text style={[styles.skillTagText, { color: colors.textPrimary }]}>{lang}</Text>
-            </View>
+          {languages.map(lang => (
+            <Pressable key={lang.name} onPress={() => openSkill(lang)} style={({pressed})=>[styles.skillTag, styles.langSkillTag, pressed && styles.skillPressed]}>
+              <Text style={[styles.skillTagText, { color: colors.textPrimary }]}>{lang.name}</Text>
+            </Pressable>
           ))}
         </View>
       </View>
 
-      <View style={styles.footer}>
-        <Text style={styles.footerText}>© 2026 Thiago Henrique</Text>
-      </View>
+        <View style={styles.footer}>
+          <Text style={styles.footerText}>© 2026 Thiago Henrique</Text>
+          <TouchableOpacity style={styles.contactButton} onPress={() => Linking.openURL('mailto:thiago@example.com')}>
+            <Text style={styles.contactButtonText}>Contato</Text>
+          </TouchableOpacity>
+        </View>
+
+        <Modal visible={modalVisible} transparent animationType="slide">
+          <View style={styles.modalOverlay}>
+            <View style={styles.modalContent}>
+              <Text style={styles.modalTitle}>{selectedSkill?.name}</Text>
+              <Text style={styles.modalBody}>{selectedSkill?.desc}</Text>
+              <TouchableOpacity style={styles.modalCloseButton} onPress={() => setModalVisible(false)}>
+                <Text style={styles.modalCloseText}>Fechar</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
     </ScrollView>
   );
 };
@@ -564,7 +650,7 @@ const useStyles = () => {
     },
     aboutImage: {
       width: isWide ? 360 : '100%',
-      height: isWide ? 360 : 280,
+      height: isWide ? 360 : isTablet ? 360 : 420,
       backgroundColor: 'rgba(115, 103, 240, 0.1)',
     },
     aboutContent: {
@@ -752,6 +838,66 @@ const useStyles = () => {
       fontWeight: '600',
       color: colors.textSecondary,
       letterSpacing: 0.3,
+    },
+    contactButton: {
+      marginTop: 8,
+      backgroundColor: colors.accent,
+      paddingHorizontal: 14,
+      paddingVertical: 8,
+      borderRadius: 8,
+      shadowColor: colors.accent,
+      shadowOffset: { width: 0, height: 6 },
+      shadowOpacity: 0.15,
+      shadowRadius: 8,
+      elevation: 4,
+    },
+    contactButtonText: {
+      color: '#fff',
+      fontWeight: '700',
+      fontSize: 13,
+    },
+    modalOverlay: {
+      flex: 1,
+      backgroundColor: 'rgba(0,0,0,0.5)',
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: 20,
+    },
+    modalContent: {
+      width: '100%',
+      maxWidth: 720,
+      backgroundColor: colors.secondary,
+      padding: 20,
+      borderRadius: 12,
+      borderWidth: 1,
+      borderColor: 'rgba(115, 103, 240, 0.15)',
+    },
+    modalTitle: {
+      fontSize: 18,
+      fontWeight: '800',
+      color: colors.textPrimary,
+      marginBottom: 8,
+    },
+    modalBody: {
+      fontSize: 14,
+      color: colors.textSecondary,
+      lineHeight: 20,
+      marginBottom: 16,
+    },
+    modalCloseButton: {
+      alignSelf: 'flex-end',
+      backgroundColor: colors.primary,
+      paddingHorizontal: 12,
+      paddingVertical: 8,
+      borderRadius: 8,
+    },
+    modalCloseText: {
+      color: '#fff',
+      fontWeight: '700',
+    },
+    skillPressed: {
+      opacity: 0.8,
+      transform: [{ scale: 0.98 }],
     },
   });
 };
